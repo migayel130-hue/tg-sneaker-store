@@ -1,281 +1,193 @@
-console.log("Sneaker Store Loaded");
-
-/* PRODUCT DATABASE */
-
-const products=[
-
-{
-name:"Campus OG07",
-price:999,
-brand:"Campus",
-img:"og07.jpg"
-},
-
-{
-name:"Campus OG30",
-price:1299,
-brand:"Campus",
-img:"og30.jpg"
-},
-
-{
-name:"Campus Pass Moments",
-price:1299,
-brand:"Campus",
-img:"Untitled.jpeg"
-},
-
-{
-name:"Asian Runner",
-price:899,
-brand:"Asian",
-img:"asian1.jpg"
-},
-
-{
-name:"Asian Street Sneaker",
-price:1099,
-brand:"Asian",
-img:"asian2.jpg"
-},
-
-{
-name:"55 SAMA BLACK",
-price:999,
-brand:"Asian",
-img:"sama-black.jpg"
-},
-
-{
-name:"Bacan Multi Colour Sneakers Trendy Sports Shoes Classy Casual Shoes For Men",
-price:799,
-brand:"Asian",
-img:"bacan-multicolour.jpg"
-},
-
-{
-name:"Men's Sneakers for Casual Everyday Style",
-price:1499,
-brand:"RedTape",
-img:"redtape-style.jpg"
-},
-
-{
-name:"Men's Lifestyle Sneakers",
-price:1499,
-brand:"RedTape",
-img:"redtape-lifestyle.jpg"
+body{
+font-family:Poppins;
+margin:0;
+background:linear-gradient(135deg,#ffe5ec,#e0f7ff);
 }
 
-];
+/* NAVBAR */
 
+header{
 
-/* RENDER PRODUCTS */
+display:flex;
+justify-content:space-between;
+align-items:center;
 
-function renderProducts(list){
+padding:15px 30px;
 
-const container=document.getElementById("products");
+background:rgba(255,255,255,0.35);
 
-container.innerHTML="";
+backdrop-filter:blur(20px);
 
-list.forEach(p=>{
+box-shadow:0 10px 40px rgba(0,0,0,0.1);
 
-container.innerHTML+=`
-
-<div class="product">
-
-<div class="product-inner">
-
-<img src="${p.img}">
-
-<h3>${p.name}</h3>
-
-<p>₹${p.price}</p>
-
-<button onclick="viewProduct('${p.name}',${p.price},'${p.img}')">
-View
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
+position:sticky;
+top:0;
 
 }
 
-
-/* FILTERS */
-
-function filterCampus(){
-renderProducts(products.filter(p=>p.brand==="Campus"));
+.logo{
+font-size:22px;
+font-weight:700;
+color:#ff4d6d;
 }
 
-function filterAsian(){
-renderProducts(products.filter(p=>p.brand==="Asian"));
+nav a{
+margin:0 15px;
+text-decoration:none;
+color:#333;
 }
 
-function filterRedtape(){
-renderProducts(products.filter(p=>p.brand==="RedTape"));
+nav a:hover{
+color:#ff4d6d;
 }
 
-function filterPrice(){
-renderProducts(products.filter(p=>p.price<=1000));
+/* HERO */
+
+.hero{
+text-align:center;
+padding:80px 20px;
 }
 
+/* FILTER GRID */
+
+.card-grid{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+padding:20px;
+
+}
+
+.card{
+
+background:white;
+padding:30px;
+border-radius:20px;
+text-align:center;
+cursor:pointer;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+
+transition:0.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-5px) scale(1.05);
+
+}
+
+/* PRODUCTS GRID */
+
+.products{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:25px;
+padding:25px;
+
+}
+
+/* PRODUCT CARD */
+
+.product{
+perspective:1000px;
+}
+
+.product-inner{
+
+background:white;
+padding:20px;
+border-radius:20px;
+
+transform-style:preserve-3d;
+transition:transform 0.3s;
+
+box-shadow:0 15px 40px rgba(0,0,0,0.1);
+
+text-align:center;
+
+}
+
+.product img{
+
+width:100%;
+border-radius:15px;
+
+transform:translateZ(40px);
+
+animation:float 4s infinite ease-in-out;
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(-10px)}
+100%{transform:translateY(0)}
+
+}
+
+.product h3{
+transform:translateZ(30px);
+}
+
+.product p{
+transform:translateZ(25px);
+}
+
+.product button{
+
+padding:10px 20px;
+border:none;
+border-radius:20px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+
+transform:translateZ(35px);
+
+}
 
 /* PRODUCT PAGE */
 
-function viewProduct(name,price,img){
+.nike-product{
 
-document.getElementById("products").style.display="none"
-
-document.getElementById("productView").innerHTML=
-
-`
-
-<div class="nike-product">
-
-<div class="nike-left">
-
-<img src="${img}" class="nike-shoe">
-
-</div>
-
-<div class="nike-right">
-
-<h1>${name}</h1>
-
-<h2>₹${price}</h2>
-
-<p>
-Premium sneaker for everyday comfort, breathable design
-and durable outsole perfect for street style.
-</p>
-
-<h3>Select Size</h3>
-
-<div class="sizes">
-
-<button>7</button>
-<button>8</button>
-<button>9</button>
-<button>10</button>
-
-</div>
-
-<button class="buy-btn" onclick="checkout('${name}',${price})">
-Buy Now
-</button>
-
-</div>
-
-</div>
-
-`;
+display:flex;
+flex-wrap:wrap;
+gap:40px;
+padding:40px;
+justify-content:center;
 
 }
 
+.nike-left img{
+width:350px;
+}
 
-/* CHECKOUT */
+.sizes button{
 
-function checkout(name,price){
+margin:5px;
+padding:10px 15px;
 
-document.getElementById("productView").innerHTML=
-
-`
-
-<h2>Delivery Details</h2>
-
-<input id="name" placeholder="Name"><br><br>
-
-<input id="phone" placeholder="Phone"><br><br>
-
-<input id="address" placeholder="Address"><br><br>
-
-<input id="pincode" placeholder="Pincode"><br><br>
-
-<button onclick="pay('${name}',${price})">
-Pay Now
-</button>
-
-`;
+border-radius:10px;
+border:1px solid #ddd;
 
 }
 
+.buy-btn{
 
-/* PAYMENT */
+padding:14px 25px;
 
-function pay(name,price){
+background:#ff4d6d;
 
-const customerName=document.getElementById("name").value
-const phone=document.getElementById("phone").value
-const address=document.getElementById("address").value
-const pincode=document.getElementById("pincode").value
+border:none;
 
-const order=`
+border-radius:30px;
 
-Sneaker Order
+color:white;
 
-Product: ${name}
-Price: ₹${price}
-
-Customer: ${customerName}
-Phone: ${phone}
-Address: ${address}
-Pincode: ${pincode}
-
-`
-
-window.location.href=
-`upi://pay?pa=abinavsdinesh24@fam&pn=SneakerStore&am=${price}`
-
-window.open(
-`https://wa.me/918281454227?text=${encodeURIComponent(order)}`
-)
-
-window.open(
-`mailto:kpsharon0@gmail.com?subject=Sneaker Order&body=${encodeURIComponent(order)}`
-)
+cursor:pointer;
 
 }
-
-
-/* INITIAL LOAD */
-
-renderProducts(products);
-
-
-/* 3D HOVER EFFECT */
-
-document.addEventListener("mousemove",e=>{
-
-document.querySelectorAll(".product").forEach(card=>{
-
-const rect=card.getBoundingClientRect()
-
-const x=e.clientX-rect.left
-const y=e.clientY-rect.top
-
-const centerX=rect.width/2
-const centerY=rect.height/2
-
-const rotateX=(y-centerY)/12
-const rotateY=(centerX-x)/12
-
-card.querySelector(".product-inner").style.transform=
-`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
-
-})
-
-})
-
-document.addEventListener("mouseleave",()=>{
-
-document.querySelectorAll(".product-inner").forEach(card=>{
-card.style.transform="rotateX(0) rotateY(0)"
-})
-
-})
