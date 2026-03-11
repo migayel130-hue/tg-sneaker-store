@@ -271,3 +271,7 @@ window.open(
 );
 
 }
+
+/* LOAD PRODUCTS WHEN PAGE OPENS */
+
+renderProducts(products);
