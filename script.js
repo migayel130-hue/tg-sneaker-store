@@ -1,3 +1,4 @@
+console.log("js working");
 console.log("Sneaker Store JS Loaded");
 
 /* PRODUCTS DATABASE */
