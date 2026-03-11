@@ -1,7 +1,6 @@
-console.log("js working");
-console.log("Sneaker Store JS Loaded");
+console.log("Sneaker Store Loaded");
 
-/* PRODUCTS DATABASE */
+/* PRODUCT DATABASE */
 
 const products=[
 
@@ -62,24 +61,10 @@ img:"redtape-style.jpg"
 },
 
 {
-name:"Men's Lifestyle Sneakers | Sleek Lace-Up Design for Daily Comfort",
+name:"Men's Lifestyle Sneakers",
 price:1499,
 brand:"RedTape",
 img:"redtape-lifestyle.jpg"
-},
-
-{
-name:"Men Sneakers for Casual Everyday Comfort",
-price:1499,
-brand:"RedTape",
-img:"redtape-comfort.jpg"
-},
-
-{
-name:"Casual Sneaker Shoes for Men",
-price:1499,
-brand:"RedTape",
-img:"redtape-casual.jpg"
 }
 
 ];
@@ -99,7 +84,9 @@ container.innerHTML+=`
 
 <div class="product">
 
-<img src="${p.img}" width="200">
+<div class="product-inner">
+
+<img src="${p.img}">
 
 <h3>${p.name}</h3>
 
@@ -111,6 +98,8 @@ View
 
 </div>
 
+</div>
+
 `;
 
 });
@@ -118,85 +107,70 @@ View
 }
 
 
-/* FILTER CAMPUS */
+/* FILTERS */
 
 function filterCampus(){
-
-const campusProducts=products.filter(p=>p.brand==="Campus");
-
-renderProducts(campusProducts);
-
+renderProducts(products.filter(p=>p.brand==="Campus"));
 }
-
-
-/* FILTER ASIAN */
 
 function filterAsian(){
-
-const asianProducts=products.filter(p=>p.brand==="Asian");
-
-renderProducts(asianProducts);
-
+renderProducts(products.filter(p=>p.brand==="Asian"));
 }
-
-
-/* FILTER REDTAPE */
 
 function filterRedtape(){
-
-const redtapeProducts=products.filter(p=>p.brand==="RedTape");
-
-renderProducts(redtapeProducts);
-
+renderProducts(products.filter(p=>p.brand==="RedTape"));
 }
-
-
-/* FILTER UNDER 1000 */
 
 function filterPrice(){
-
-const cheap=products.filter(p=>p.price<=1000);
-
-renderProducts(cheap);
-
+renderProducts(products.filter(p=>p.price<=1000));
 }
 
 
-/* PRODUCT VIEW */
+/* PRODUCT PAGE */
 
 function viewProduct(name,price,img){
 
-document.getElementById("products").style.display="none";
+document.getElementById("products").style.display="none"
 
 document.getElementById("productView").innerHTML=
 
 `
 
-<div class="single">
+<div class="nike-product">
 
-<img src="${img}" style="width:300px">
+<div class="nike-left">
 
-<h2>${name}</h2>
+<img src="${img}" class="nike-shoe">
 
-<h3>₹${price}</h3>
+</div>
 
-<p>Premium comfort sneaker designed for everyday style and durability.</p>
+<div class="nike-right">
 
-<select>
+<h1>${name}</h1>
 
-<option>Select Size</option>
-<option>7</option>
-<option>8</option>
-<option>9</option>
-<option>10</option>
+<h2>₹${price}</h2>
 
-</select>
+<p>
+Premium sneaker for everyday comfort, breathable design
+and durable outsole perfect for street style.
+</p>
 
-<br><br>
+<h3>Select Size</h3>
 
-<button onclick="checkout('${name}',${price})">
+<div class="sizes">
+
+<button>7</button>
+<button>8</button>
+<button>9</button>
+<button>10</button>
+
+</div>
+
+<button class="buy-btn" onclick="checkout('${name}',${price})">
 Buy Now
 </button>
+
+</div>
 
 </div>
 
@@ -205,7 +179,7 @@ Buy Now
 }
 
 
-/* CHECKOUT PAGE */
+/* CHECKOUT */
 
 function checkout(name,price){
 
@@ -232,16 +206,17 @@ Pay Now
 }
 
 
-/* PAYMENT SYSTEM */
+/* PAYMENT */
 
 function pay(name,price){
 
-const customerName=document.getElementById("name").value;
-const phone=document.getElementById("phone").value;
-const address=document.getElementById("address").value;
-const pincode=document.getElementById("pincode").value;
+const customerName=document.getElementById("name").value
+const phone=document.getElementById("phone").value
+const address=document.getElementById("address").value
+const pincode=document.getElementById("pincode").value
 
 const order=`
+
 Sneaker Order
 
 Product: ${name}
@@ -251,31 +226,56 @@ Customer: ${customerName}
 Phone: ${phone}
 Address: ${address}
 Pincode: ${pincode}
-`;
 
-/* UPI PAYMENT */
+`
 
 window.location.href=
-`upi://pay?pa=abinavsdinesh24@fam&pn=SneakerStore&am=${price}`;
-
-/* WHATSAPP ORDER */
+`upi://pay?pa=abinavsdinesh24@fam&pn=SneakerStore&am=${price}`
 
 window.open(
 `https://wa.me/918281454227?text=${encodeURIComponent(order)}`
-);
-
-/* EMAIL ORDER */
+)
 
 window.open(
 `mailto:kpsharon0@gmail.com?subject=Sneaker Order&body=${encodeURIComponent(order)}`
-);
+)
 
 }
 
-/* LOAD PRODUCTS WHEN PAGE OPENS */
+
+/* INITIAL LOAD */
 
 renderProducts(products);
 
-function scrollToProducts(){
-document.getElementById("products").scrollIntoView({behavior:"smooth"});
-}
+
+/* 3D HOVER EFFECT */
+
+document.addEventListener("mousemove",e=>{
+
+document.querySelectorAll(".product").forEach(card=>{
+
+const rect=card.getBoundingClientRect()
+
+const x=e.clientX-rect.left
+const y=e.clientY-rect.top
+
+const centerX=rect.width/2
+const centerY=rect.height/2
+
+const rotateX=(y-centerY)/12
+const rotateY=(centerX-x)/12
+
+card.querySelector(".product-inner").style.transform=
+`rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+
+})
+
+})
+
+document.addEventListener("mouseleave",()=>{
+
+document.querySelectorAll(".product-inner").forEach(card=>{
+card.style.transform="rotateX(0) rotateY(0)"
+})
+
+})
