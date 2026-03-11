@@ -83,14 +83,14 @@ function renderProducts(list){
 
 const container=document.getElementById("products")
 container.innerHTML=""
-
+  
 list.forEach(p=>{
 
 container.innerHTML+=`
 
 <div class="product">
 
-<img src="${p.img}">
+<img src="${p.img}" width="200">
 
 <h3>${p.name}</h3>
 
