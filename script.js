@@ -275,3 +275,7 @@ window.open(
 /* LOAD PRODUCTS WHEN PAGE OPENS */
 
 renderProducts(products);
+
+function scrollToProducts(){
+document.getElementById("products").scrollIntoView({behavior:"smooth"});
+}
